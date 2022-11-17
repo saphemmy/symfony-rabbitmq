@@ -15,7 +15,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 
-# Logs (Symfony4)
+# Logs (Symfony5)
 /var/log/*
 !var/log/.gitkeep
 
@@ -50,3 +50,6 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+#IDE generated files
+.idea/
