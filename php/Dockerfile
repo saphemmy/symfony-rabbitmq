@@ -1,4 +1,16 @@
-FROM php:7.4-fpm
+FROM php:7.4-fpm-alpine
+
+LABEL Maintainer="Oluwafemi Sosami"
+
+ENV PHPGROUP=analyst
+ENV PHPUSER=analyst
+
+RUN add -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
+
+RUN sed -i "s/user = www-data/user = ${PHPUSER}/g" usr/local/etc/php-fpm.d/www.conf
+RUN sed -i "s/group = www-data/group = ${PHPGROUP}/g" usr/local/etc/php-fpm.d/www.conf
+
+RUN mkdir -p /var/www/symfony/public
 
 RUN apt update \
     && apt install -y --no-install-recommends \
@@ -15,15 +27,4 @@ RUN apt update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
-#EXPOSE 80
-WORKDIR /var/www/symfony
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN curl -sS https://get.symfony.com/cli/installer | bash
-RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
-
-
-
-RUN git config user.email "saphemmy@gmail.com" \
-    && git config user.name "Sosami Oluwafemi"
+CMD ["php-fpm", "-y", "usr/local/etc/php-fpm.conf", "-R"]

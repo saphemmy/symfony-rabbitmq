@@ -1,4 +1,14 @@
-FROM nginx:latest
-COPY ./nginx/default.conf /etc/nginx/conf.d
+FROM nginx:stable-alpine
+
+ENV NGINXUSER=analyst
+ENV NGINXGROUP=analyst
+
+RUN mkdir -p /var/www/symfony/public
+
+ADD ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+RUN sed -i "s/user www-data/user ${NGINXUSER}/g" /etc/nginx/nginx.conf
+
+RUN adduser -g {$NGINXGROUP} -s /bin/sh -D {$NGINXUSER}
 
 EXPOSE 80
