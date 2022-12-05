@@ -53,3 +53,6 @@
 
 #IDE generated files
 .idea/
+
+#To be ignored
+/mysql/
