@@ -5,14 +5,6 @@ LABEL Maintainer="Oluwafemi Sosami"
 ENV PHPGROUP=analyst
 ENV PHPUSER=analyst
 
-
-#RUN add -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
-#
-#RUN sed -i "s/user = www-data/user = ${PHPUSER}/g" usr/local/etc/php-fpm.d/www.conf
-#RUN sed -i "s/group = www-data/group = ${PHPGROUP}/g" usr/local/etc/php-fpm.d/www.conf
-
-#RUN mkdir -p /var/www/symfony/public
-
 RUN apt update \
     && apt install -y --no-install-recommends \
     zlib1g-dev \
@@ -31,8 +23,6 @@ RUN apt update \
 COPY /symfony /symfony
 
 RUN chown ${PHPGROUP}:${PHPUSER} /symfony
-
-#WORKDIR /var/www/symfony
 
 RUN composer install
 

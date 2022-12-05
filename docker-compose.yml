@@ -9,9 +9,8 @@ services:
     working_dir: /symfony
     ports:
       - "9000:9000"
-    #    environment:
-    #      APP_ENV: dev
-    #      DATABASE_URL: mysql://root:root@sql:3306/symfony_db?serverVersion=5.7
+    environment:
+      DATABASE_URL: mysql://root:root@sql:3306/symfony_db?serverVersion=5.7
     volumes:
       - ./:/symfony
     depends_on:
@@ -48,7 +47,12 @@ services:
   mysql:
     container_name: mysql
     image: mariadb:10.5
-    #    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password']
+    command:
+      [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-authentication-plugin=mysql_native_password'
+      ]
     environment:
       MYSQL_DATABASE: symfony_db
       MYSQL_USER: symfony_user
